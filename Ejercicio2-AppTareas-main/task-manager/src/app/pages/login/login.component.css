@@ -1,0 +1,6 @@
+@import '../../../styles/auth-form.css';
+
+.forgot-row a {
+  font-size: var(--font-sm);
+  font-weight: 600;
+}

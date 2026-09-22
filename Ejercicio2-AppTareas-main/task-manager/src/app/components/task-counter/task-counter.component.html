@@ -1,7 +1,11 @@
 <div class="counter-container">
   <div class="counter-badge">
-    <span class="counter-label">Tareas pendientes:</span>
+    <span class="counter-label">Pendientes</span>
     <span class="counter-value">{{ pendingCount }}</span>
+  </div>
+  <div class="counter-badge">
+    <span class="counter-label">Completadas</span>
+    <span class="counter-value counter-done">{{ completedCount }}</span>
   </div>
   <div class="counter-total">
     <span>Total: {{ totalCount }}</span>

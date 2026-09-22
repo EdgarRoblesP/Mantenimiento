@@ -57,7 +57,7 @@ Para comenzar, es necesario implementar una base de datos que incluya tablas de 
 | NRF-02 | El sistema debe autenticar el correo electrónico para poder finalizar el registro del usuario. | Should |
 | NRF-03 | El sistema debe permitir al usuario iniciar sesión con su correo electrónico y contraseña. | Must |
 | NRF-04 | El sistema debe permitir al usuario recuperar contraseña a través de su correo electrónico. | Should |
-| NRF-05 | El sistema debe permitir al usuario iniciar sesión con su correo y contraseña. | Must |
+| NRF-05 | El sistema debe permitir al usuario cerrar sesión, invalidando su sesión activa. | Must |
 | NRF-06 | El sistema debe permitir al usuario crear tareas, guardando nombre, hora y fecha. | Must |
 | NRF-07 | El sistema debe permitir al usuario crear subtareas dentro de cada tarea, guardando únicamente nombre. | Should |
 | NRF-08 | El sistema debe permitir al usuario marcar tareas y subtareas como completadas. | Should |
@@ -71,7 +71,7 @@ Para comenzar, es necesario implementar una base de datos que incluya tablas de 
 | ID | Requisito | Categoría |
 |---|---|---|
 | RNF-01 | Las interfaces deberán integrar colores saturados, minimizando el uso de blanco y negro. | Usabilidad |
-| RNF-02 | El sistema deberá ser compatible con: [herramientas externas]. | Compatibilidad |
+| RNF-02 | El sistema deberá ser compatible con las herramientas externas Railway (hospedaje de backend y base de datos) y Brevo (envío de correos electrónicos). | Compatibilidad |
 | RNF-03 | La base de datos debe ser desarrollada en MySQL. | Arquitectura |
 | RNF-04 | Todo el código fuente del sistema deberá ser refactorizado con el objetivo de mejorar su legibilidad, mantenibilidad, estructura y calidad, sin alterar la funcionalidad existente. | Arquitectura |
 

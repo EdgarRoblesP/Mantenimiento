@@ -1,0 +1,21 @@
+<div class="progress">
+  <div
+    class="progress-track"
+    role="progressbar"
+    [attr.aria-valuenow]="progress"
+    aria-valuemin="0"
+    aria-valuemax="100"
+    [attr.aria-label]="'Progreso: ' + progress + ' por ciento'"
+  >
+    <div
+      class="progress-fill"
+      [class.progress-complete]="isComplete"
+      [style.width.%]="progress"
+    ></div>
+  </div>
+
+  <span class="progress-label">
+    <span *ngIf="total > 0">{{ completed }}/{{ total }}</span>
+    <span class="progress-percent">{{ progress }}%</span>
+  </span>
+</div>

@@ -1,0 +1,129 @@
+.page {
+  min-height: 100vh;
+  background: var(--bg-page);
+}
+
+/* --- Barra superior -------------------------------------------------------- */
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-6);
+  padding: var(--space-6) var(--space-8);
+  background: var(--bg-card);
+  border-bottom: 1px solid var(--border-default);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.brand-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: var(--accent-primary);
+  border-radius: 9px;
+  color: var(--text-on-accent);
+}
+
+.brand-name {
+  font-size: var(--font-lg);
+  font-weight: 700;
+}
+
+.account {
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+  min-width: 0;
+}
+
+.account-email {
+  font-size: var(--font-sm);
+  color: var(--text-secondary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.logout-btn {
+  flex-shrink: 0;
+  padding: var(--space-3) var(--space-6);
+  background: none;
+  border: 1.5px solid var(--border-default);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  font-size: var(--font-sm);
+  font-weight: 600;
+  transition: border-color var(--transition), color var(--transition);
+}
+
+.logout-btn:hover:not(:disabled) {
+  border-color: var(--status-danger);
+  color: var(--status-danger);
+}
+
+.logout-btn:disabled {
+  opacity: 0.5;
+}
+
+/* --- Contenido ------------------------------------------------------------- */
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  max-width: 760px;
+  margin: 0 auto;
+  padding: var(--space-10) var(--space-6) var(--space-12);
+}
+
+.intro {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-5);
+}
+
+.intro-title {
+  font-size: var(--font-2xl);
+  font-weight: 700;
+  margin: 0;
+}
+
+.list-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.list-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-5);
+}
+
+.list-title {
+  font-size: var(--font-lg);
+  font-weight: 600;
+  margin: 0;
+}
+
+@media (max-width: 560px) {
+  .topbar {
+    padding: var(--space-5) var(--space-6);
+  }
+
+  .account-email {
+    display: none;
+  }
+}

@@ -1,0 +1,100 @@
+/* =============================================================================
+ * Estilos compartidos por las pantallas de autenticación.
+ * Se importan desde el CSS de cada componente para no repetir el mismo bloque
+ * cinco veces (RNF-04: sin código duplicado).
+ * ========================================================================== */
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  width: 100%;
+  padding: 14px var(--space-7);
+  border: none;
+  border-radius: var(--radius-md);
+  font-size: var(--font-base);
+  font-weight: 600;
+  transition: opacity var(--transition), transform var(--transition);
+}
+
+.btn-primary {
+  background: var(--accent-primary);
+  color: var(--text-on-accent);
+}
+
+.btn-outline {
+  background: none;
+  border: 1.5px solid var(--border-default);
+  color: var(--text-primary);
+}
+
+.btn:hover:not(:disabled) {
+  opacity: 0.9;
+}
+
+.btn:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+}
+
+.link-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: var(--font-sm);
+  font-weight: 600;
+  color: var(--accent-link);
+}
+
+.link-btn:hover {
+  text-decoration: underline;
+}
+
+.form-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  font-size: var(--font-md);
+  color: var(--text-secondary);
+}
+
+.form-footer a {
+  font-weight: 600;
+}
+
+.forgot-row {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: spin 600ms linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spinner {
+    animation-duration: 2s;
+  }
+}

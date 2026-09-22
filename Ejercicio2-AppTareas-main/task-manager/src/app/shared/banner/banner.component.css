@@ -1,0 +1,46 @@
+.banner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-5) var(--space-6);
+  border-radius: var(--radius-md);
+  border: 1px solid;
+}
+
+.banner-message {
+  font-size: var(--font-md);
+  font-weight: 500;
+  margin: 0;
+}
+
+.banner-danger {
+  background: var(--danger-soft);
+  border-color: var(--status-danger);
+  color: var(--status-danger);
+}
+
+.banner-success {
+  background: var(--success-soft);
+  border-color: var(--status-success);
+  color: var(--status-success);
+}
+
+.banner-warning {
+  background: var(--link-soft);
+  border-color: var(--accent-link);
+  color: var(--accent-link);
+}
+
+.banner-action {
+  align-self: flex-start;
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: var(--font-sm);
+  font-weight: 600;
+  color: var(--accent-link);
+}
+
+.banner-action:hover {
+  text-decoration: underline;
+}

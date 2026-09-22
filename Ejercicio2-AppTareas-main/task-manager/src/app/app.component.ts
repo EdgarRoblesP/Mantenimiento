@@ -1,24 +1,14 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { TaskCounterComponent } from './components/task-counter/task-counter.component';
-import { TaskInputComponent } from './components/task-input/task-input.component';
-import { TaskFilterComponent } from './components/task-filter/task-filter.component';
-import { TaskListComponent } from './components/task-list/task-list.component';
+import { RouterOutlet } from '@angular/router';
 
+/**
+ * Raíz de la aplicación. Desde que hay enrutado, cada pantalla aporta su propio
+ * encabezado, así que aquí solo queda el punto de montaje del router.
+ */
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [
-    CommonModule,
-    TaskCounterComponent,
-    TaskInputComponent,
-    TaskFilterComponent,
-    TaskListComponent
-  ],
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  imports: [RouterOutlet],
+  template: '<router-outlet></router-outlet>'
 })
-export class AppComponent {
-  public appTitle = 'Lista de Tareas';
-  public appSubtitle = 'Práctica 2 - Mantenimiento de Software';
-}
+export class AppComponent {}

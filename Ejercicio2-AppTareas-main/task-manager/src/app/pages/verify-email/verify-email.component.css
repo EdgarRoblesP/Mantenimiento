@@ -1,0 +1,47 @@
+@import '../../../styles/auth-form.css';
+
+.state-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  border-radius: var(--radius-lg);
+  color: var(--text-on-accent);
+}
+
+.state-pending,
+.state-verifying {
+  background: var(--accent-soft);
+  color: var(--accent-link);
+}
+
+.state-verified {
+  background: var(--status-success);
+}
+
+.state-failed {
+  background: var(--status-danger);
+}
+
+.state-bang {
+  font-size: var(--font-2xl);
+  font-weight: 700;
+  line-height: 1;
+}
+
+.spinner-lg {
+  width: 24px;
+  height: 24px;
+  border-width: 3px;
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.actions:empty {
+  display: none;
+}

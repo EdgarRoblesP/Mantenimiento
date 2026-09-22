@@ -1,30 +1,29 @@
 .filter-group {
   display: inline-flex;
-  background: #18181b;
-  padding: 0.25rem;
-  border-radius: 8px;
-  border: 1px solid #27272a;
-  gap: 0.25rem;
+  gap: var(--space-1);
+  padding: var(--space-1);
+  background: var(--bg-input);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
 }
 
 .filter-btn {
-  padding: 0.35rem 0.75rem;
+  padding: var(--space-2) var(--space-5);
   background: transparent;
-  color: #a1a1aa;
   border: none;
-  border-radius: 6px;
-  font-size: 0.825rem;
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  font-size: var(--font-sm);
   font-weight: 500;
-  cursor: pointer;
-  transition: all 0.15s ease;
+  transition: background-color var(--transition), color var(--transition);
 }
 
 .filter-btn:hover {
-  color: #fafafa;
+  color: var(--text-primary);
 }
 
 .filter-btn.active {
-  background: #27272a;
-  color: #ffffff;
+  background: var(--accent-primary);
+  color: var(--text-on-accent);
   font-weight: 600;
 }

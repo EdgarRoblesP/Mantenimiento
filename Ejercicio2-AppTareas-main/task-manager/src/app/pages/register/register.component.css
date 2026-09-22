@@ -1,0 +1,40 @@
+@import '../../../styles/auth-form.css';
+
+/* Lista de requisitos de contraseña (helper `Req` del script de Figma). */
+.rules {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: 0 var(--space-1);
+  margin: calc(var(--space-2) * -1) 0 0;
+  list-style: none;
+}
+
+.rule {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-size: var(--font-sm);
+  color: var(--text-secondary);
+}
+
+.rule-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  border: 1.5px solid var(--border-default);
+  border-radius: var(--radius-sm);
+  color: var(--text-on-accent);
+}
+
+.rule-ok {
+  color: var(--text-primary);
+}
+
+.rule-ok .rule-icon {
+  background: var(--status-success);
+  border-color: var(--status-success);
+}

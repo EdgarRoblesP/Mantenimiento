@@ -1,0 +1,190 @@
+.subtasks {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.subtask-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.subtask {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-sm);
+  transition: background-color var(--transition);
+}
+
+.subtask:hover {
+  background: var(--bg-input);
+}
+
+.subtask-check {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  flex: 1;
+  min-width: 0;
+  cursor: pointer;
+}
+
+/* El checkbox nativo se oculta pero sigue siendo el que recibe el foco. */
+.subtask-check input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.custom-checkbox {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  border: 1.5px solid var(--border-default);
+  border-radius: var(--radius-sm);
+  color: var(--text-on-accent);
+  transition: background-color var(--transition), border-color var(--transition);
+}
+
+.custom-checkbox svg {
+  opacity: 0;
+}
+
+.subtask-check input:checked + .custom-checkbox {
+  background: var(--status-success);
+  border-color: var(--status-success);
+}
+
+.subtask-check input:checked + .custom-checkbox svg {
+  opacity: 1;
+}
+
+.subtask-check input:focus-visible + .custom-checkbox {
+  box-shadow: var(--shadow-focus);
+}
+
+.subtask-title {
+  font-size: var(--font-md);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.completed .subtask-title {
+  color: var(--text-secondary);
+  text-decoration: line-through;
+}
+
+.subtask-delete {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 26px;
+  height: 26px;
+  padding: 0;
+  background: none;
+  border: none;
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  opacity: 0;
+  transition: opacity var(--transition), color var(--transition);
+}
+
+.subtask:hover .subtask-delete,
+.subtask-delete:focus-visible {
+  opacity: 1;
+}
+
+.subtask-delete:hover {
+  color: var(--status-danger);
+}
+
+.add-subtask {
+  display: flex;
+  gap: var(--space-3);
+}
+
+.subtask-input {
+  flex: 1;
+  min-width: 0;
+  padding: var(--space-4) var(--space-5);
+  background: var(--bg-input);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  font-size: var(--font-md);
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+.subtask-input::placeholder {
+  color: var(--text-secondary);
+}
+
+.subtask-input:focus {
+  outline: none;
+  border-color: var(--accent-primary);
+  box-shadow: var(--shadow-focus);
+}
+
+.input-error {
+  border-color: var(--status-danger);
+  border-width: 1.5px;
+}
+
+.subtask-add-btn {
+  flex-shrink: 0;
+  padding: var(--space-4) var(--space-6);
+  background: none;
+  border: 1.5px solid var(--border-default);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  font-size: var(--font-sm);
+  font-weight: 600;
+  transition: border-color var(--transition), color var(--transition);
+}
+
+.subtask-add-btn:hover:not(:disabled) {
+  border-color: var(--accent-primary);
+  color: var(--accent-link);
+}
+
+.subtask-add-btn:disabled {
+  opacity: 0.5;
+}
+
+.subtask-error {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--font-xs);
+  font-weight: 500;
+  color: var(--status-danger);
+  margin: 0;
+}
+
+.error-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  background: var(--status-danger);
+  border-radius: var(--radius-sm);
+  color: var(--text-on-accent);
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1;
+}

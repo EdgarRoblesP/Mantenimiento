@@ -1,0 +1,46 @@
+<div class="page">
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor"
+             stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 10.5 L8.5 15 L16 6" />
+        </svg>
+      </span>
+      <span class="brand-name">List Website</span>
+    </div>
+
+    <div class="account">
+      <span class="account-email">{{ email }}</span>
+      <button type="button" class="logout-btn" (click)="onLogout()" [disabled]="loggingOut">
+        {{ loggingOut ? 'Cerrando…' : 'Cerrar sesión' }}
+      </button>
+    </div>
+  </header>
+
+  <main class="content">
+    <div class="intro">
+      <h1 class="intro-title">Mis tareas</h1>
+      <app-task-counter></app-task-counter>
+    </div>
+
+    <app-task-input></app-task-input>
+
+    <app-banner
+      *ngIf="loadError"
+      [message]="loadError"
+      kind="danger"
+      actionLabel="Reintentar"
+      (action)="loadTasks()"
+    ></app-banner>
+
+    <section class="list-section">
+      <div class="list-header">
+        <h2 class="list-title">Lista</h2>
+        <app-task-filter></app-task-filter>
+      </div>
+
+      <app-task-list></app-task-list>
+    </section>
+  </main>
+</div>

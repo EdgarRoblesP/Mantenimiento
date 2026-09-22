@@ -1,0 +1,31 @@
+{
+  "name": "list-website-backend",
+  "version": "1.0.0",
+  "description": "API REST de List Website: autenticación, tareas y subtareas sobre MySQL.",
+  "private": true,
+  "type": "module",
+  "main": "src/server.js",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "migrate": "node scripts/migrate.js",
+    "seed": "node scripts/seed.js",
+    "test": "node --test --import ./tests/setup.js tests/"
+  },
+  "dependencies": {
+    "@getbrevo/brevo": "^2.2.0",
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.2",
+    "express-rate-limit": "^7.4.1",
+    "helmet": "^8.0.0",
+    "jsonwebtoken": "^9.0.2",
+    "mysql2": "^3.11.5",
+    "uuid": "^11.0.3",
+    "zod": "^3.24.1"
+  }
+}

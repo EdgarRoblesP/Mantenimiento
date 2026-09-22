@@ -1,0 +1,11 @@
+<div class="banner" [ngClass]="'banner-' + kind" role="status">
+  <p class="banner-message">{{ message }}</p>
+  <button
+    type="button"
+    class="banner-action"
+    *ngIf="actionLabel"
+    (click)="action.emit()"
+  >
+    {{ actionLabel }} →
+  </button>
+</div>

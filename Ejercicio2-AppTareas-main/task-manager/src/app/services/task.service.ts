@@ -1,46 +1,35 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, combineLatest, map } from 'rxjs';
-import { Task, TaskFilterType } from '../models/task.model';
+import { Injectable, inject } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { BehaviorSubject, Observable, catchError, combineLatest, map, tap } from 'rxjs';
+import { environment } from '../../environments/environment';
+import { Task, TaskFilterType, TaskPayload } from '../models/task.model';
+import { rethrowAsApiError } from '../core/http-error';
 
-@Injectable({
-  providedIn: 'root'
-})
+/**
+ * Estado de tareas y subtareas respaldado por la API (antes era un array en
+ * memoria que se perdía al recargar).
+ *
+ * Toda escritura sobre subtareas devuelve la tarea padre ya recalculada, así
+ * que el progreso (NRF-10) y el completado automático (NRF-09) se reflejan sin
+ * pedir de nuevo la lista completa.
+ */
+@Injectable({ providedIn: 'root' })
 export class TaskService {
-  private tasks: Task[] = [
-    {
-      id: 1,
-      title: 'Revisar apuntes de la clase',
-      completed: true,
-      createdAt: new Date('2026-08-28T09:00:00')
-    },
-    {
-      id: 2,
-      title: 'Subir código de la práctica 2 al repositorio',
-      completed: false,
-      createdAt: new Date('2026-08-29T11:30:00')
-    },
-    {
-      id: 3,
-      title: 'Preparar exposición del proyecto',
-      completed: false,
-      createdAt: new Date('2026-08-30T14:15:00')
-    }
-  ];
+  private readonly http = inject(HttpClient);
+  private readonly baseUrl = environment.apiUrl;
 
-  private tasksSubject = new BehaviorSubject<Task[]>(this.tasks);
-  private filterSubject = new BehaviorSubject<TaskFilterType>('all');
+  private readonly tasksSubject = new BehaviorSubject<Task[]>([]);
+  private readonly filterSubject = new BehaviorSubject<TaskFilterType>('all');
+  private readonly loadingSubject = new BehaviorSubject<boolean>(false);
 
-  public tasks$: Observable<Task[]> = this.tasksSubject.asObservable();
-  public filter$: Observable<TaskFilterType> = this.filterSubject.asObservable();
+  public readonly tasks$: Observable<Task[]> = this.tasksSubject.asObservable();
+  public readonly filter$: Observable<TaskFilterType> = this.filterSubject.asObservable();
+  public readonly loading$: Observable<boolean> = this.loadingSubject.asObservable();
 
-  public filteredTasks$: Observable<Task[]> = combineLatest([
+  public readonly filteredTasks$: Observable<Task[]> = combineLatest([
     this.tasks$,
     this.filter$
-  ]).pipe(
-    map(([tasks, filter]) => this.filterTasks(tasks, filter))
-  );
-
-  private nextId = 4;
+  ]).pipe(map(([tasks, filter]) => this.filterTasks(tasks, filter)));
 
   public get currentFilter(): TaskFilterType {
     return this.filterSubject.value;
@@ -50,59 +39,131 @@ export class TaskService {
     this.filterSubject.next(filter);
   }
 
-  public addTask(title: string): void {
-    const trimmedTitle = title.trim();
-    if (!trimmedTitle) {
-      return;
-    }
-
-    const newTask: Task = {
-      id: this.nextId++,
-      title: trimmedTitle,
-      completed: false,
-      createdAt: new Date()
-    };
-
-    this.tasks = [newTask, ...this.tasks];
-    this.tasksSubject.next([...this.tasks]);
+  /** Carga inicial de la pantalla de tareas. */
+  public loadTasks(): Observable<Task[]> {
+    this.loadingSubject.next(true);
+    return this.http.get<{ tasks: Task[] }>(`${this.baseUrl}/tasks`).pipe(
+      map(response => response.tasks),
+      tap({
+        next: tasks => {
+          this.tasksSubject.next(tasks);
+          this.loadingSubject.next(false);
+        },
+        error: () => this.loadingSubject.next(false)
+      }),
+      catchError(rethrowAsApiError)
+    );
   }
 
-  public toggleTask(id: number): void {
-    this.tasks = this.tasks.map(task => {
-      if (task.id === id) {
-        return { ...task, completed: !task.completed };
-      }
-      return task;
-    });
-    this.tasksSubject.next([...this.tasks]);
+  /** Vacía el estado al cerrar sesión, para no mostrar tareas de otra cuenta. */
+  public reset(): void {
+    this.tasksSubject.next([]);
+    this.filterSubject.next('all');
   }
 
-  public updateTaskTitle(id: number, newTitle: string): void {
-    const trimmedTitle = newTitle.trim();
-    if (!trimmedTitle) {
-      return;
-    }
+  // --- Tareas ----------------------------------------------------------------
 
-    const task = this.tasks.find(t => t.id === id);
-    if (task) {
-      task.title = trimmedTitle;
-    }
+  /** NRF-06 */
+  public addTask(payload: TaskPayload): Observable<Task> {
+    return this.http.post<{ task: Task }>(`${this.baseUrl}/tasks`, payload).pipe(
+      map(response => response.task),
+      tap(task => this.tasksSubject.next([task, ...this.tasksSubject.value])),
+      catchError(rethrowAsApiError)
+    );
   }
 
-  public deleteTask(id: number): void {
-    const index = this.tasks.findIndex(task => task.id === id);
-    if (index !== -1) {
-      this.tasks.splice(index + 1, 1);
-      this.tasksSubject.next([...this.tasks]);
-    }
+  /**
+   * Antes esta operación mutaba la tarea sin emitir al BehaviorSubject, así que
+   * la vista no se enteraba. Ahora se aplica la tarea que devuelve el backend.
+   */
+  public updateTask(id: number, payload: TaskPayload): Observable<Task> {
+    return this.http.patch<{ task: Task }>(`${this.baseUrl}/tasks/${id}`, payload).pipe(
+      map(response => response.task),
+      tap(task => this.replaceTask(task)),
+      catchError(rethrowAsApiError)
+    );
   }
 
+  /** NRF-08 */
+  public toggleTask(id: number, completed: boolean): Observable<Task> {
+    return this.http
+      .patch<{ task: Task }>(`${this.baseUrl}/tasks/${id}/completed`, { completed })
+      .pipe(
+        map(response => response.task),
+        tap(task => this.replaceTask(task)),
+        catchError(rethrowAsApiError)
+      );
+  }
+
+  /**
+   * Borra la tarea indicada. El código anterior hacía `splice(index + 1, 1)`,
+   * que eliminaba la tarea siguiente en lugar de la seleccionada.
+   */
+  public deleteTask(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/tasks/${id}`).pipe(
+      tap(() => this.tasksSubject.next(this.tasksSubject.value.filter(task => task.id !== id))),
+      catchError(rethrowAsApiError)
+    );
+  }
+
+  // --- Subtareas -------------------------------------------------------------
+
+  /** NRF-07 */
+  public addSubtask(taskId: number, title: string): Observable<Task> {
+    return this.http
+      .post<{ task: Task }>(`${this.baseUrl}/tasks/${taskId}/subtasks`, { title })
+      .pipe(
+        map(response => response.task),
+        tap(task => this.replaceTask(task)),
+        catchError(rethrowAsApiError)
+      );
+  }
+
+  public updateSubtask(subtaskId: number, title: string): Observable<Task> {
+    return this.http.patch<{ task: Task }>(`${this.baseUrl}/subtasks/${subtaskId}`, { title }).pipe(
+      map(response => response.task),
+      tap(task => this.replaceTask(task)),
+      catchError(rethrowAsApiError)
+    );
+  }
+
+  /** NRF-08 sobre subtareas; el backend aplica NRF-09 a la tarea padre. */
+  public toggleSubtask(subtaskId: number, completed: boolean): Observable<Task> {
+    return this.http
+      .patch<{ task: Task }>(`${this.baseUrl}/subtasks/${subtaskId}/completed`, { completed })
+      .pipe(
+        map(response => response.task),
+        tap(task => this.replaceTask(task)),
+        catchError(rethrowAsApiError)
+      );
+  }
+
+  public deleteSubtask(subtaskId: number): Observable<Task> {
+    return this.http.delete<{ task: Task }>(`${this.baseUrl}/subtasks/${subtaskId}`).pipe(
+      map(response => response.task),
+      tap(task => this.replaceTask(task)),
+      catchError(rethrowAsApiError)
+    );
+  }
+
+  // --- Internos --------------------------------------------------------------
+
+  private replaceTask(updated: Task): void {
+    this.tasksSubject.next(
+      this.tasksSubject.value.map(task => (task.id === updated.id ? updated : task))
+    );
+  }
+
+  /**
+   * El filtro `completed` del código anterior devolvía `!task.completed`, es
+   * decir, las pendientes. Aquí cada opción devuelve lo que anuncia.
+   */
   private filterTasks(tasks: Task[], filter: TaskFilterType): Task[] {
     switch (filter) {
       case 'pending':
         return tasks.filter(task => !task.completed);
       case 'completed':
-        return tasks.filter(task => !task.completed);
+        return tasks.filter(task => task.completed);
       case 'all':
       default:
         return tasks;

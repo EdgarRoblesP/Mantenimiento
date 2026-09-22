@@ -1,0 +1,67 @@
+/* =============================================================================
+ * List Website - tokens de diseño
+ *
+ * Los nombres replican la colección "List Website · Colores" del archivo de
+ * Figma (iB0ecveG98qUzLqb2vJBFp). Este es el ÚNICO archivo donde se declaran
+ * colores: todo lo demás usa var(--...).
+ * ========================================================================== */
+
+:root {
+  /* --- Colores del diseño (RNF-01: saturados, sin blanco ni negro puros) --- */
+  --bg-page: #4F46E5;          /* bg/page        - fondo de pantalla */
+  --bg-card: #312E81;          /* bg/card        - tarjeta principal */
+  --bg-input: #3730A3;         /* bg/input       - campos de formulario */
+  --accent-primary: #F97316;   /* accent/primary - botones y logo */
+  --accent-link: #FCD34D;      /* accent/link    - enlaces */
+  --text-primary: #EEF2FF;     /* text/primary   - texto principal */
+  --text-secondary: #A5B4FC;   /* text/secondary - etiquetas y apoyos */
+  --text-on-accent: #ffffff;   /* text/onAccent  - texto sobre acento */
+  --border-default: #6366F1;   /* border/default - bordes de campos */
+  --status-danger: #FB7185;    /* status/danger  - errores */
+  --status-success: #34D399;   /* status/success - confirmaciones */
+  --progress-track: #4338CA;   /* progress/track - fondo de la barra de progreso */
+
+  /* --- Derivados: fondos translúcidos de los banners ---------------------- */
+  --danger-soft: color-mix(in srgb, var(--status-danger) 16%, transparent);
+  --success-soft: color-mix(in srgb, var(--status-success) 16%, transparent);
+  --link-soft: color-mix(in srgb, var(--accent-link) 16%, transparent);
+  --accent-soft: color-mix(in srgb, var(--accent-primary) 18%, transparent);
+
+  /* --- Radios (del script de Figma) --------------------------------------- */
+  --radius-sm: 8px;
+  --radius-md: 10px;   /* inputs y botones */
+  --radius-lg: 20px;   /* tarjetas */
+  --radius-pill: 999px;
+
+  /* --- Espaciado ----------------------------------------------------------- */
+  --space-1: 4px;
+  --space-2: 6px;
+  --space-3: 8px;
+  --space-4: 10px;
+  --space-5: 12px;
+  --space-6: 16px;
+  --space-7: 20px;
+  --space-8: 24px;
+  --space-10: 32px;
+  --space-12: 40px;
+
+  /* --- Tipografía (Inter, como el archivo de Figma) ------------------------ */
+  --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    Helvetica, Arial, sans-serif;
+  --font-xs: 12px;
+  --font-sm: 13px;
+  --font-md: 14px;
+  --font-base: 15px;
+  --font-lg: 16px;
+  --font-xl: 20px;
+  --font-2xl: 28px;
+
+  /* --- Sombras -------------------------------------------------------------
+   * La sombra de la tarjeta viene tal cual del script de Figma:
+   * offset (0, 16), radio 40, rgba(0.1, 0.05, 0.3, 0.45). */
+  --shadow-card: 0 16px 40px rgba(26, 13, 77, 0.45);
+  --shadow-focus: 0 0 0 3px var(--accent-soft);
+
+  /* --- Transiciones -------------------------------------------------------- */
+  --transition: 160ms ease;
+}

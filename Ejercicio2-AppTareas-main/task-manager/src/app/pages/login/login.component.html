@@ -1,0 +1,47 @@
+<app-auth-card
+  title="Bienvenido de nuevo"
+  subtitle="Inicia sesión para ver y organizar tus tareas."
+>
+  <app-banner
+    *ngIf="banner"
+    [message]="banner.message"
+    [kind]="banner.kind"
+    [actionLabel]="needsVerification ? banner.action : undefined"
+    (action)="onResendVerification()"
+  ></app-banner>
+
+  <form class="form" [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+    <app-form-field label="Correo electrónico" controlId="email" [error]="errorFor('email')">
+      <input
+        id="email"
+        type="email"
+        formControlName="email"
+        placeholder="tu@correo.com"
+        autocomplete="email"
+      />
+    </app-form-field>
+
+    <app-form-field label="Contraseña" controlId="password" [error]="errorFor('password')">
+      <app-password-input
+        controlId="password"
+        formControlName="password"
+        autocomplete="current-password"
+        placeholder="Tu contraseña"
+      ></app-password-input>
+    </app-form-field>
+
+    <div class="forgot-row">
+      <a routerLink="/recuperar-contrasena">¿Olvidaste tu contraseña?</a>
+    </div>
+
+    <button type="submit" class="btn btn-primary" [disabled]="submitting">
+      <span class="spinner" *ngIf="submitting" aria-hidden="true"></span>
+      {{ submitting ? 'Entrando…' : 'Iniciar sesión' }}
+    </button>
+  </form>
+
+  <p class="form-footer">
+    ¿No tienes cuenta?
+    <a routerLink="/registro">Regístrate</a>
+  </p>
+</app-auth-card>

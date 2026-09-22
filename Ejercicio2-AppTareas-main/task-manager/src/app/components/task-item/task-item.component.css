@@ -1,156 +1,249 @@
 .task-item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  padding: var(--space-6);
+  background: var(--bg-card);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
   list-style: none;
-  background: #18181b;
-  border: 1px solid #27272a;
-  border-radius: 8px;
-  padding: 0.75rem 1rem;
-  margin-bottom: 0.5rem;
-  transition: border-color 0.15s ease;
-  cursor: pointer;
+  transition: border-color var(--transition), opacity var(--transition);
 }
 
 .task-item:hover {
-  border-color: #3f3f46;
+  border-color: var(--accent-primary);
 }
 
 .task-item.completed {
-  opacity: 0.6;
-  background: #141416;
+  opacity: 0.72;
 }
 
-.task-content-wrapper {
+.task-row {
   display: flex;
   align-items: center;
-  gap: 0.85rem;
+  gap: var(--space-5);
 }
+
+/* --- Checkbox -------------------------------------------------------------- */
 
 .checkbox-container {
   display: inline-flex;
-  align-items: center;
+  flex-shrink: 0;
   cursor: pointer;
 }
 
 .checkbox-container input {
-  display: none;
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
 }
 
 .custom-checkbox {
-  width: 18px;
-  height: 18px;
-  border: 1.5px solid #52525b;
-  border-radius: 4px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.15s ease;
+  width: 22px;
+  height: 22px;
+  border: 1.5px solid var(--border-default);
+  border-radius: var(--radius-sm);
+  color: var(--text-on-accent);
+  transition: background-color var(--transition), border-color var(--transition);
+}
+
+.custom-checkbox svg {
+  opacity: 0;
 }
 
 .checkbox-container input:checked + .custom-checkbox {
-  background: #2563eb;
-  border-color: #2563eb;
+  background: var(--status-success);
+  border-color: var(--status-success);
 }
 
-.checkbox-container input:checked + .custom-checkbox::after {
-  content: '✓';
-  color: #ffffff;
-  font-size: 11px;
-  font-weight: bold;
+.checkbox-container input:checked + .custom-checkbox svg {
+  opacity: 1;
 }
+
+.checkbox-container input:focus-visible + .custom-checkbox {
+  box-shadow: var(--shadow-focus);
+}
+
+/* --- Contenido ------------------------------------------------------------- */
 
 .task-details {
-  flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 0.15rem;
+  gap: var(--space-1);
+  flex: 1;
+  min-width: 0;
 }
 
 .task-title {
-  color: #fafafa;
-  font-size: 0.925rem;
-  font-weight: 400;
+  font-size: var(--font-base);
+  font-weight: 500;
+  overflow-wrap: anywhere;
 }
 
-.task-item.completed .task-title {
+.completed .task-title {
+  color: var(--text-secondary);
   text-decoration: line-through;
-  color: #71717a;
 }
 
 .task-date {
-  color: #71717a;
-  font-size: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-size: var(--font-xs);
+  color: var(--text-secondary);
 }
+
+.overdue {
+  color: var(--status-danger);
+}
+
+.overdue-tag {
+  padding: 2px var(--space-3);
+  background: var(--danger-soft);
+  border-radius: var(--radius-pill);
+  font-weight: 600;
+}
+
+/* --- Acciones -------------------------------------------------------------- */
 
 .task-actions {
   display: flex;
-  gap: 0.25rem;
+  align-items: center;
+  gap: var(--space-2);
+  flex-shrink: 0;
 }
 
 .action-btn {
-  background: transparent;
-  border: none;
-  color: #71717a;
+  position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0.35rem;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: all 0.15s ease;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  background: none;
+  border: none;
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  transition: background-color var(--transition), color var(--transition);
 }
 
-.action-btn:hover {
-  background: #27272a;
+.action-btn:hover:not(:disabled) {
+  background: var(--bg-input);
+  color: var(--text-primary);
 }
 
-.edit-btn:hover {
-  color: #60a5fa;
+.action-btn.active {
+  background: var(--accent-soft);
+  color: var(--accent-link);
 }
 
-.delete-btn:hover {
-  color: #f87171;
+.delete-btn:hover:not(:disabled) {
+  color: var(--status-danger);
 }
 
-.edit-mode-wrapper {
+.action-btn:disabled {
+  opacity: 0.5;
+}
+
+.badge {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  min-width: 16px;
+  padding: 0 4px;
+  background: var(--accent-primary);
+  border-radius: var(--radius-pill);
+  color: var(--text-on-accent);
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 16px;
+}
+
+.task-error {
+  font-size: var(--font-xs);
+  font-weight: 500;
+  color: var(--status-danger);
+  margin: 0;
+}
+
+/* --- Modo edición ---------------------------------------------------------- */
+
+.edit-mode {
   display: flex;
-  gap: 0.5rem;
-  align-items: center;
-  width: 100%;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.edit-datetime {
+  display: flex;
+  gap: var(--space-4);
+}
+
+.edit-datetime .edit-input {
+  flex: 1;
+  min-width: 0;
 }
 
 .edit-input {
-  flex: 1;
-  background: #121212;
-  border: 1px solid #2563eb;
-  border-radius: 6px;
-  padding: 0.4rem 0.65rem;
-  color: #fafafa;
-  font-size: 0.9rem;
+  width: 100%;
+  padding: var(--space-4) var(--space-5);
+  background: var(--bg-input);
+  border: 1px solid var(--accent-primary);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  font-size: var(--font-md);
+}
+
+.edit-input:focus {
   outline: none;
+  box-shadow: var(--shadow-focus);
 }
 
 .edit-actions {
   display: flex;
-  gap: 0.35rem;
+  gap: var(--space-3);
+}
+
+.btn-save,
+.btn-cancel {
+  padding: var(--space-4) var(--space-6);
+  border-radius: var(--radius-md);
+  font-size: var(--font-sm);
+  font-weight: 600;
 }
 
 .btn-save {
-  background: #16a34a;
-  color: white;
+  background: var(--accent-primary);
   border: none;
-  border-radius: 6px;
-  padding: 0.4rem 0.75rem;
-  font-size: 0.8rem;
-  font-weight: 500;
-  cursor: pointer;
+  color: var(--text-on-accent);
+}
+
+.btn-save:disabled {
+  opacity: 0.5;
 }
 
 .btn-cancel {
-  background: #3f3f46;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  padding: 0.4rem 0.75rem;
-  font-size: 0.8rem;
-  font-weight: 500;
-  cursor: pointer;
+  background: none;
+  border: 1.5px solid var(--border-default);
+  color: var(--text-secondary);
+}
+
+.btn-cancel:hover {
+  color: var(--text-primary);
+}
+
+@media (max-width: 520px) {
+  .task-row {
+    flex-wrap: wrap;
+  }
+
+  .task-actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
 }

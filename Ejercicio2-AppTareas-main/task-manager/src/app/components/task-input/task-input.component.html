@@ -1,20 +1,35 @@
-<form class="input-form" (ngSubmit)="onAddTask()">
-  <div class="input-group">
-    <input
-      type="text"
-      name="title"
-      [(ngModel)]="taskTitle"
-      placeholder="Escribe una nueva tarea..."
-      class="task-input-field"
-      autocomplete="off"
-    />
-    <button
-      type="submit"
-      class="btn-add"
-      [disabled]="!taskTitle.trim()"
+<form class="task-form" [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+  <h2 class="form-title">Nueva tarea</h2>
+
+  <div class="form-grid">
+    <app-form-field
+      class="field-title"
+      label="Nombre de la tarea"
+      controlId="taskTitle"
+      [error]="errorFor('title')"
     >
-      <span class="btn-icon">+</span>
-      <span>Agregar</span>
-    </button>
+      <input
+        id="taskTitle"
+        type="text"
+        formControlName="title"
+        placeholder="Escribe una nueva tarea…"
+        autocomplete="off"
+      />
+    </app-form-field>
+
+    <app-form-field label="Fecha" controlId="taskDate" [error]="errorFor('dueDate')">
+      <input id="taskDate" type="date" formControlName="dueDate" />
+    </app-form-field>
+
+    <app-form-field label="Hora" controlId="taskTime" [error]="errorFor('dueTime')">
+      <input id="taskTime" type="time" formControlName="dueTime" />
+    </app-form-field>
   </div>
+
+  <p class="form-error" *ngIf="errorMessage">{{ errorMessage }}</p>
+
+  <button type="submit" class="btn-add" [disabled]="submitting">
+    <span class="btn-icon" aria-hidden="true">+</span>
+    <span>{{ submitting ? 'Agregando…' : 'Agregar tarea' }}</span>
+  </button>
 </form>

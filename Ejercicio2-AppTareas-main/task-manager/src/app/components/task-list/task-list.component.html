@@ -1,25 +1,29 @@
 <div class="task-list-container">
-  <ul class="task-list" *ngIf="tasks.length > 0; else emptyState">
+  <div class="loading-state" *ngIf="loading">
+    <span class="spinner" aria-hidden="true"></span>
+    <p>Cargando tus tareas…</p>
+  </div>
+
+  <ul class="task-list" *ngIf="!loading && tasks.length > 0">
     <app-task-item
-      *ngFor="let item of tasks"
+      *ngFor="let item of tasks; trackBy: trackById"
       [task]="item"
     ></app-task-item>
   </ul>
 
-  <ng-template #emptyState>
-    <div class="empty-state">
-      <div class="empty-icon">
-        <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-          <rect x="8" y="2" width="8" height="4" rx="1" ry="1"/>
-          <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/>
-          <path d="M12 11h4"/>
-          <path d="M12 16h4"/>
-          <path d="M8 11h.01"/>
-          <path d="M8 16h.01"/>
-        </svg>
-      </div>
-      <p class="empty-title">No hay tareas para mostrar</p>
-      <p class="empty-subtitle">Escribe una tarea arriba para agregarla a la lista.</p>
+  <div class="empty-state" *ngIf="!loading && tasks.length === 0">
+    <div class="empty-icon" aria-hidden="true">
+      <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+           stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="8" y="2" width="8" height="4" rx="1" ry="1" />
+        <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
+        <path d="M12 11h4" />
+        <path d="M12 16h4" />
+        <path d="M8 11h.01" />
+        <path d="M8 16h.01" />
+      </svg>
     </div>
-  </ng-template>
+    <p class="empty-title">{{ emptyTitle }}</p>
+    <p class="empty-subtitle">{{ emptySubtitle }}</p>
+  </div>
 </div>
