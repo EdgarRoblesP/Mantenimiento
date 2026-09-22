@@ -1,0 +1,27 @@
+<div class="app-container">
+
+  <main class="main-card">
+    <header class="app-header">
+      <div>
+        <h1 class="header-title">{{ appTitle }}</h1>
+        <p class="header-subtitle">{{ appSubtitle }}</p>
+      </div>
+      <app-task-counter></app-task-counter>
+    </header>
+
+    <section class="section-input">
+      <app-task-input></app-task-input>
+    </section>
+
+    <div class="controls-row">
+      <div class="section-heading">
+        <h2>Mis Tareas</h2>
+      </div>
+      <app-task-filter></app-task-filter>
+    </div>
+
+    <section class="section-list">
+      <app-task-list></app-task-list>
+    </section>
+  </main>
+</div>

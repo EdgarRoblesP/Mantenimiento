@@ -1,0 +1,20 @@
+<form class="input-form" (ngSubmit)="onAddTask()">
+  <div class="input-group">
+    <input
+      type="text"
+      name="title"
+      [(ngModel)]="taskTitle"
+      placeholder="Escribe una nueva tarea..."
+      class="task-input-field"
+      autocomplete="off"
+    />
+    <button
+      type="submit"
+      class="btn-add"
+      [disabled]="!taskTitle.trim()"
+    >
+      <span class="btn-icon">+</span>
+      <span>Agregar</span>
+    </button>
+  </div>
+</form>

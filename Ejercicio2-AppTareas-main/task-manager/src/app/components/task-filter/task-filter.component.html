@@ -1,0 +1,26 @@
+<div class="filter-group">
+  <button
+    type="button"
+    class="filter-btn"
+    [class.active]="currentFilter === 'all'"
+    (click)="onSelectFilter('all')"
+  >
+    Todas
+  </button>
+  <button
+    type="button"
+    class="filter-btn"
+    [class.active]="currentFilter === 'pending'"
+    (click)="onSelectFilter('pending')"
+  >
+    Pendientes
+  </button>
+  <button
+    type="button"
+    class="filter-btn"
+    [class.active]="currentFilter === 'completed'"
+    (click)="onSelectFilter('completed')"
+  >
+    Completadas
+  </button>
+</div>

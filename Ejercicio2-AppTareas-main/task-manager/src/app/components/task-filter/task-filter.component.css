@@ -1,0 +1,30 @@
+.filter-group {
+  display: inline-flex;
+  background: #18181b;
+  padding: 0.25rem;
+  border-radius: 8px;
+  border: 1px solid #27272a;
+  gap: 0.25rem;
+}
+
+.filter-btn {
+  padding: 0.35rem 0.75rem;
+  background: transparent;
+  color: #a1a1aa;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.825rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.filter-btn:hover {
+  color: #fafafa;
+}
+
+.filter-btn.active {
+  background: #27272a;
+  color: #ffffff;
+  font-weight: 600;
+}

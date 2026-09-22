@@ -1,0 +1,156 @@
+.task-item {
+  list-style: none;
+  background: #18181b;
+  border: 1px solid #27272a;
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  margin-bottom: 0.5rem;
+  transition: border-color 0.15s ease;
+  cursor: pointer;
+}
+
+.task-item:hover {
+  border-color: #3f3f46;
+}
+
+.task-item.completed {
+  opacity: 0.6;
+  background: #141416;
+}
+
+.task-content-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.checkbox-container {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.checkbox-container input {
+  display: none;
+}
+
+.custom-checkbox {
+  width: 18px;
+  height: 18px;
+  border: 1.5px solid #52525b;
+  border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+}
+
+.checkbox-container input:checked + .custom-checkbox {
+  background: #2563eb;
+  border-color: #2563eb;
+}
+
+.checkbox-container input:checked + .custom-checkbox::after {
+  content: '✓';
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: bold;
+}
+
+.task-details {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.task-title {
+  color: #fafafa;
+  font-size: 0.925rem;
+  font-weight: 400;
+}
+
+.task-item.completed .task-title {
+  text-decoration: line-through;
+  color: #71717a;
+}
+
+.task-date {
+  color: #71717a;
+  font-size: 0.75rem;
+}
+
+.task-actions {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.action-btn {
+  background: transparent;
+  border: none;
+  color: #71717a;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.35rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.action-btn:hover {
+  background: #27272a;
+}
+
+.edit-btn:hover {
+  color: #60a5fa;
+}
+
+.delete-btn:hover {
+  color: #f87171;
+}
+
+.edit-mode-wrapper {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  width: 100%;
+}
+
+.edit-input {
+  flex: 1;
+  background: #121212;
+  border: 1px solid #2563eb;
+  border-radius: 6px;
+  padding: 0.4rem 0.65rem;
+  color: #fafafa;
+  font-size: 0.9rem;
+  outline: none;
+}
+
+.edit-actions {
+  display: flex;
+  gap: 0.35rem;
+}
+
+.btn-save {
+  background: #16a34a;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 0.4rem 0.75rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.btn-cancel {
+  background: #3f3f46;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 0.4rem 0.75rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+}
