@@ -156,9 +156,14 @@ Otros cambios estructurales:
    | `FRONTEND_URL` | URL pública del frontend |
    | `NODE_ENV` | `production` |
 
-4. En el frontend, poner la URL pública del backend en
-   `src/environments/environment.production.ts` y construir con
-   `ng build --configuration production`.
+4. Poner la URL pública del backend en
+   `task-manager/src/environments/environment.production.ts`.
+5. Añadir otro servicio desde el repositorio (GitHub Repository) con raíz
+   `Ejercicio2-AppTareas-main/task-manager`. Su `railway.json` compila con
+   `npm run build` y sirve `dist/task-manager/browser` con `serve -s`, que
+   responde `index.html` en cualquier ruta (necesario para los enlaces de
+   los correos, p. ej. `/verify-email?token=…`).
+6. Copiar la URL pública del frontend en `FRONTEND_URL` del backend.
 
 ---
 
