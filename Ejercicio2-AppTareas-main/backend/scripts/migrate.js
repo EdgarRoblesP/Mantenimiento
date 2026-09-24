@@ -13,7 +13,7 @@ import mysql from 'mysql2/promise';
 import { env } from '../src/config/env.js';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
-const schemaPath = path.resolve(here, '../../database/schema.sql');
+const schemaPath = path.resolve(here, '../database/schema.sql');
 
 const connectionConfig = () => {
   if (env.db.url) {

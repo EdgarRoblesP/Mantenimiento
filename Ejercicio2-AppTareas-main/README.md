@@ -5,8 +5,8 @@ Mantenimiento del *Ejercicio 2 – App de Tareas* según `Mantenimiento_SDD.md`.
 
 ```
 Ejercicio2-AppTareas-main/
-├── database/        Esquema MySQL y datos de ejemplo
 ├── backend/         API REST (Node 20 + Express + MySQL)
+│   └── database/    Esquema MySQL y datos de ejemplo
 ├── task-manager/    Frontend (Angular 19)
 └── Mantenimiento_SDD.md
 ```
@@ -108,7 +108,7 @@ npm test
 | NRF-10 | Barra de progreso | Campo `progress` calculado en SQL · `progress-bar` |
 | RNF-01 | Colores saturados | `task-manager/src/styles/tokens.css` |
 | RNF-02 | Railway y Brevo | `backend/railway.json` · `services/mailer.js` |
-| RNF-03 | Base de datos en MySQL | `database/schema.sql` |
+| RNF-03 | Base de datos en MySQL | `backend/database/schema.sql` |
 | RNF-04 | Refactorización | Ver la sección siguiente |
 
 ---
@@ -140,7 +140,8 @@ Otros cambios estructurales:
 ## Despliegue en Railway (RNF-02)
 
 1. Crear un proyecto y añadirle un servicio **MySQL**.
-2. Añadir un servicio desde el repositorio con raíz `backend/`.
+2. Añadir un servicio desde el repositorio con raíz
+   `Ejercicio2-AppTareas-main/backend` (incluye `database/schema.sql`).
    `railway.json` ya define el `startCommand` (migra y arranca) y el healthcheck
    en `/api/health`.
 3. Variables del servicio backend:
